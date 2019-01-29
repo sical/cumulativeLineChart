@@ -1,0 +1,15 @@
+{
+	"file": "visits/all_january.csv",
+	"name": "Museum and Library visits",
+	"header": 1,
+	"separator": ",",
+	"meta": [
+		{ "key": "date", "id": "id", "group": "group"}
+	],
+    "attributes": [
+		{"name":"entrees", "type": "quantitative", "cumulative": "sumentrees"}
+	],
+    "author": "Aurelien",
+    "description": "Cumulative entries for the month of january 2019",
+    "source": "anon"
+}
