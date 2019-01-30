@@ -4,7 +4,7 @@
 	"header": 1,
 	"separator": ",",
 	"meta": [
-		{ "key": "date", "id": "id", "group": "group"}
+		{ "date": "date", "id": "institution", "group": "typeOfInstitution",}
 	],
     "attributes": [
 		{"name":"entrees", "type": "quantitative", "cumulative": "sumentrees"}
