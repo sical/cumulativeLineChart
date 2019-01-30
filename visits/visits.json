@@ -1,10 +1,10 @@
 {
-	"file": "visits/all_january.csv",
+	"file": "visits/visits.csv",
 	"name": "Museum and Library visits",
 	"header": 1,
 	"separator": ",",
 	"meta": [
-		{ "date": "date", "id": "institution", "group": "typeOfInstitution",}
+		{ "date": "date", "id": "institution", "group": "typeOfInstitution"}
 	],
     "attributes": [
 		{"name":"entrees", "type": "quantitative", "cumulative": "sumentrees"}
