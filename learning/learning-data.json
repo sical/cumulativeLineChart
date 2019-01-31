@@ -1,0 +1,19 @@
+{
+	"file": "learning/learning-data.csv",
+	"name": "Learners progression ",
+	"header": 1,
+	"separator": ",",
+	"meta": [
+		{ "date": "date", "id": "userId", "group": "groupName"}
+	],
+    "attributes": [
+		{"name":"score",	"type": "quantitative", "cumulative": "sumscore"},
+		{"name":"time",		"type": "quantitative", "cumulative": "sumtime"},
+		{"name":"nok",		"type": "quantitative", "cumulative": "sumnok"},
+		{"name":"nko",		"type": "quantitative", "cumulative": "sumnko"}
+	],
+    "author": "team",
+    "description": "Learners scores over a year",
+    "source": "?"
+}
+
