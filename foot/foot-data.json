@@ -1,0 +1,21 @@
+{
+	"file": "foot/foot-data.csv",
+	"name": "Foot scorers ",
+	"header": 1,
+	"separator": ",",
+	"meta": [
+		{ "date": "date", "id": "playerSurname", "group": "team"}
+	],
+    "attributes": [
+		{"name":"score",	"type": "quantitative", "cumulative": "sumscore"},
+		{"name":"time",		"type": "quantitative", "cumulative": "sumtime"},
+		{"name":"nok",		"type": "quantitative", "cumulative": "sumnok"},
+		{"name":"nko",		"type": "quantitative", "cumulative": "sumnko"},
+		{"name":"nsesssion","type": "quantitative", "cumulative": "sumsession"}, 
+		{"name":"nycard",	"type": "quantitative", "cumulative": "sumnycard"}
+	],
+    "author": "team",
+    "description": "Best players of the Premier League",
+    "source": "?"
+}
+
