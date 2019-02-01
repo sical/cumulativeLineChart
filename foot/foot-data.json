@@ -7,11 +7,14 @@
 		{ "date": "date", "id": "playerSurname", "group": "team"}
 	],
     "attributes": [
+		{"name":"date",		"type": "date"},
+		{"name":"playerSurname",	"type": "string"},
+		{"name":"team",		"type": "categorical"},
 		{"name":"score",	"type": "quantitative", "cumulative": "sumscore"},
 		{"name":"time",		"type": "quantitative", "cumulative": "sumtime"},
 		{"name":"nok",		"type": "quantitative", "cumulative": "sumnok"},
 		{"name":"nko",		"type": "quantitative", "cumulative": "sumnko"},
-		{"name":"nsesssion","type": "quantitative", "cumulative": "sumsession"}, 
+		{"name":"nsession",	"type": "quantitative", "cumulative": "sumsession"}, 
 		{"name":"nycard",	"type": "quantitative", "cumulative": "sumnycard"}
 	],
     "author": "team",

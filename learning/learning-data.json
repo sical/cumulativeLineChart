@@ -7,6 +7,9 @@
 		{ "date": "date", "id": "userId", "group": "groupName"}
 	],
     "attributes": [
+		{"name":"date",		"type": "date"},
+		{"name":"userId",	"type": "string"},
+		{"name":"groupName","type": "categorical"},
 		{"name":"score",	"type": "quantitative", "cumulative": "sumscore"},
 		{"name":"time",		"type": "quantitative", "cumulative": "sumtime"},
 		{"name":"nok",		"type": "quantitative", "cumulative": "sumnok"},

@@ -7,6 +7,9 @@
 		{ "date": "date", "id": "institution", "group": "typeOfInstitution"}
 	],
     "attributes": [
+		{"name":"date",		"type": "date"},
+		{"name":"institution",	"type": "string"},
+		{"name":"typeOfInstitution",	"type": "categorical"},
 		{"name":"entrees", "type": "quantitative", "cumulative": "sumentrees"}
 	],
     "author": "Aurelien",
