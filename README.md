@@ -1,3 +1,7 @@
-# Cumulative Data Repo
+# Cumulative Line chart Repo
 
-one folder per dataset + associated notebook to clean the data.
+TODO
+
+## Data
+
+- One folder per dataset + associated notebook to clean the data.
