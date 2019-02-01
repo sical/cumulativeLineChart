@@ -1,0 +1,7 @@
+{
+  "extends": "react-app",
+  "rules": {
+    "space-in-parens": ["error", "always"],
+    "space-before-function-paren": ["error", "always"]
+  }
+}
