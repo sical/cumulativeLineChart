@@ -15,10 +15,11 @@ export const DatasetAction = {
 }
 
 const url = ( name, ext ) => `${API_URL}${name}/${name}-data.${ext}`
+
 const castAttrs = ( attrs, d ) => {
   each( keys( attrs ), key => {
     d[key] = +d[key]
-    d[attrs[key].cumulative] = +d[key]
+    d[attrs[key].cumulative] = +d[attrs[key].cumulative]
   })
   return d
 }

@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import classNames from 'classnames'
+
 import './App.css'
 
 class App extends Component {
@@ -6,6 +8,24 @@ class App extends Component {
     e.preventDefault()
     e.stopPropagation()
     this.props.onSelectDataset( e.target.value )
+  }
+
+  handleMouseEnter ( id, e ) {
+    e.preventDefault()
+    e.stopPropagation()
+    this.props.onLineOver({ id, status: true })
+  }
+
+  handleMouseLeave ( id, e ) {
+    e.preventDefault()
+    e.stopPropagation()
+    this.props.onLineOver({ id, status: false })
+  }
+
+  handleClick ( id, e ) {
+    e.preventDefault()
+    e.stopPropagation()
+    this.props.onLineClick({ id })
   }
 
   render () {
@@ -50,23 +70,43 @@ class App extends Component {
               <g className="x-grid" />
               <g className="y-grid" />
               <g className="lines">
-                {this.props.lines.map( line => [
+                {this.props.lineIds.map( key => [
                   <path
-                    key={line.id + 'ink'}
-                    d={line.d}
-                    style={line.inkStyle}
+                    className={classNames( 'line-ink', {
+                      'ink-pressed': this.props.lineById[key].isPressed,
+                      'ink-over':
+                        !this.props.lineById[key].isPressed &&
+                        this.props.lineById[key].isHovered,
+                      'ink-hide':
+                        !this.props.lineById[key].isHovered &&
+                        this.props.lineById.isHovered,
+                    })}
+                    id={this.props.lineById[key].id}
+                    key={this.props.lineById[key].id + 'ink'}
+                    d={this.props.lineById[key].d}
+                    style={this.props.lineById[key].inkStyle}
                   />,
                   <path
-                    key={line.id + 'shadow'}
-                    d={line.d}
-                    style={line.shadowStyle}
+                    className={classNames( 'line-shadow', {
+                      'shadow-over': this.props.lineById[key].isHovered,
+                    })}
+                    key={this.props.lineById[key].id + 'shadow'}
+                    d={this.props.lineById[key].d}
+                    style={this.props.lineById[key].shadowStyle}
+                    onMouseEnter={this.handleMouseEnter.bind( this, key )}
+                    onMouseLeave={this.handleMouseLeave.bind( this, key )}
+                    onClick={this.handleClick.bind( this, key )}
                   />,
-                  line.dots.map(( d, index ) => (
+                  this.props.lineById[key].dots.map(( d, index ) => (
                     <circle
-                      key={line.id + index}
+                      className={classNames( 'dot-ink', {
+                        'ink-pressed': this.props.lineById[key].isPressed,
+                        'ink-over': this.props.lineById[key].isHovered,
+                      })}
+                      key={this.props.lineById[key].id + index}
                       cx={d.cx}
                       cy={d.cy}
-                      style={line.dotStyle}
+                      style={this.props.lineById[key].dotStyle}
                     />
                   )),
                 ])}

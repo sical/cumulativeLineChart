@@ -36,6 +36,46 @@
   border: 1px solid #eee;
 }
 
+.line-ink {
+  fill: none;
+  stroke: #ccc;
+  stroke-width: 1;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.line-shadow {
+  fill: none;
+  stroke: #ccc;
+  stroke-width: 7;
+  opacity: 0;
+}
+
+.ink-over {
+  opacity: 0.8;
+}
+
+.ink-hide {
+  opacity: 0.1;
+}
+
+.shadow-over {
+  opacity: 0.5;
+}
+
+.ink-pressed {
+  opacity: 1;
+  stroke-width: 2;
+}
+
+.dot-ink {
+  stroke: none;
+  fill: #ccc;
+  r: 3;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
 .attribute-label {
   padding: 0 6px;
   height: 20px;

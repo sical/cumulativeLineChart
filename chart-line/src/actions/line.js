@@ -1,63 +1,86 @@
-import { line, curveMonotoneX, scaleLinear, scaleTime } from 'd3'
-import { get, random, each, map } from 'lodash'
+import { line, curveMonotoneX, nest, timeParse } from 'd3'
+import { get, map, mapValues, keys } from 'lodash'
+
 export const LineAction = {
   INIT_LINES: 'INIT_LINES',
+  HIGHLIGHT: 'HIGHLIGHT',
+  CLICK: 'CLICK',
 }
 
-export const initLines = payload => {
-  // const { datasetById, id } = payload
-  // const { data, attrs } = datasetById[id]
-  // const ykey = 'sumscore',
-  //   xkey = 'key'
+export const initLines = () => ( dispatch, getState ) => {
+  const {
+    data,
+    attrs,
+    keyId,
+    xKey,
+    yKey,
+    xType,
+    yType,
+    xDefaultKey,
+    yDefaultKey,
+  } = getState().data
 
-  const data = Array.from({ length: 20 }, ( _, k ) => ({
-    id: k,
-    inkStyle: {
-      fill: 'none',
-      stroke: '#ccc',
-      strokeWidth: 1,
-      opacity: 0.5,
-      pointerEvents: 'none',
-    },
-    shadowStyle: {
-      fill: 'none',
-      stroke: '#ccc',
-      strokeWidth: 7,
-      opacity: 0,
-    },
-    dotStyle: {
-      stroke: 'none',
-      fill: 'rgb(204, 204, 204)',
-      r: 3,
-    },
-    values: Array.from({ length: 50 }, ( _, kk ) => ({
-      x: kk,
-      y: random( 0, 99 ),
-    })),
-  }))
+  const { xScale, yScale } = getState().scale
 
-  const xScale = scaleLinear()
-    .domain([ 0, 100 ])
-    .range([ 0, 700 ])
-  const yScale = scaleLinear()
-    .domain([ 0, 100 ])
-    .range([ 500, 0 ])
+  let byId = nest()
+    .key( d => d[keyId])
+    //.key( d => mft( parseTime( d.key )))
+    //.rollup( Helpers.sumMapper )
+    .object( data )
+
+  const xAttr = get( attrs, xDefaultKey )
+  const yAttr = get( attrs, yDefaultKey )
+
+  const getX = d => {
+    const x = get( d, xKey )
+    if ( xType !== 'date' ) {
+      return x
+    } else {
+      const pattern = get( xAttr, 'pattern', '%d/%m/%Y' )
+      const parse = timeParse( pattern )
+      return parse( x )
+    }
+  }
+  const getY = d => {
+    const y = get( d, yKey )
+    if ( yType !== 'date' ) {
+      return y
+    } else {
+      const pattern = get( yAttr, 'pattern', '%d/%m/%Y' )
+      const parse = timeParse( pattern )
+      return parse( y )
+    }
+  }
 
   const path = line()
     .curve( curveMonotoneX )
-    .x( d => xScale( get( d, 'x' )))
-    .y( d => yScale( get( d, 'y' )))
+    .x( d => xScale( getX( d )))
+    .y( d => yScale( getY( d )))
 
-  each( data, o => {
-    o.d = path( o.values )
-    o.dots = map( o.values, d => ({
-      cx: xScale( get( d, 'x' )),
-      cy: yScale( get( d, 'y' )),
-    }))
-  })
+  byId = mapValues( byId, ( values, key ) => ({
+    values: values,
+    id: key,
+    isHovered: false,
+    isPressed: false,
+    d: path( values ),
+    dots: map( values, d => ({
+      cx: xScale( getX( d )),
+      cy: yScale( getY( d )),
+    })),
+  }))
 
-  return {
+  dispatch({
     type: LineAction.INIT_LINES,
-    payload: { lines: data },
-  }
+    payload: { byId, ids: keys( byId ) },
+  })
 }
+
+export const lineOver = payload => ({
+  type: LineAction.HIGHLIGHT,
+  payload,
+})
+
+export const lineClick = payload => ({
+  type: LineAction.CLICK,
+  payload,
+})

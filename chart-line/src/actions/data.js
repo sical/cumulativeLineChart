@@ -1,5 +1,5 @@
 import { initLines } from './line'
-import { initDots } from './dot'
+import { initAxisScale } from './scale'
 
 export const DataAction = {
   SELECT_DATASET: 'SELECT_DATASET',
@@ -8,11 +8,12 @@ export const DataAction = {
 export const selectAttribute = payload => {}
 
 export const selectDataset = payload => ( dispatch, getState ) => {
-  dispatch( initLines( payload ))
-  dispatch( initDots( payload ))
-
   dispatch({
     type: DataAction.SELECT_DATASET,
     payload,
   })
+
+  dispatch( initAxisScale())
+
+  dispatch( initLines())
 }
