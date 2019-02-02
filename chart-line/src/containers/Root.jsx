@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import { fetchData } from '../actions/dataset'
+import { selectDataset } from '../actions/data'
 
 import App from '../components/App'
 
@@ -9,6 +10,10 @@ import './Root.css'
 class Root extends Component {
   componentDidMount () {
     this.props.fetchData()
+  }
+
+  handleSelectDataset ( id ) {
+    this.props.selectDataset({ id, datasetById: this.props.datasetById })
   }
 
   render () {
@@ -20,6 +25,7 @@ class Root extends Component {
           <App
             datasetById={this.props.datasetById}
             datasetIds={this.props.datasetIds}
+            onSelectDataset={this.handleSelectDataset.bind( this )}
           />
         )}
       </div>
@@ -33,11 +39,7 @@ const mapStateToProps = ( state, _ ) => ({
   datasetIds: state.dataset.ids,
 })
 
-const mapDispatchToProps = dispatch => ({
-  fetchData: _ => dispatch( fetchData( _ )),
-})
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  { fetchData, selectDataset }
 )( Root )

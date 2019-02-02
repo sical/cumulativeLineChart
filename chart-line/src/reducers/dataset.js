@@ -2,7 +2,7 @@ import { reduce, keys } from 'lodash'
 
 import { DatasetAction } from '../actions/dataset'
 
-const data = ( state = { isFetching: false, error: '' }, action ) => {
+const dataset = ( state = { isFetching: false, error: '' }, action ) => {
   switch ( action.type ) {
     case DatasetAction.REQ_FETCH_DATA: {
       return { ...state, isFetching: true }
@@ -27,4 +27,4 @@ const data = ( state = { isFetching: false, error: '' }, action ) => {
   }
 }
 
-export default data
+export default dataset
