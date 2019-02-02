@@ -26,6 +26,7 @@ class Root extends Component {
             datasetById={this.props.datasetById}
             datasetIds={this.props.datasetIds}
             lines={this.props.lines}
+            dots={this.props.dots}
             onSelectDataset={this.handleSelectDataset.bind( this )}
           />
         )}
@@ -39,6 +40,7 @@ const mapStateToProps = ( state, _ ) => ({
   datasetById: state.dataset.byId,
   datasetIds: state.dataset.ids,
   lines: state.line.lines,
+  dots: state.dot.dots,
 })
 
 export default connect(

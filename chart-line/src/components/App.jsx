@@ -49,7 +49,18 @@ class App extends Component {
                   <path key={line.id} d={line.d} style={line.style} />
                 ))}
               </g>
-              <g className="dots" />
+              <g className="dots">
+                {this.props.dots.map( dot =>
+                  dot.children.map(( d, index ) => (
+                    <circle
+                      key={dot.id + index}
+                      cx={d.cx}
+                      cy={d.cy}
+                      style={dot.style}
+                    />
+                  ))
+                )}
+              </g>
             </svg>
           </div>
           <div id="canvas" />
