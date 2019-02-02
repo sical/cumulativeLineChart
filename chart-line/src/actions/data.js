@@ -9,8 +9,8 @@ export const selectDataset = payload => ( dispatch, getState ) => {
   dispatch( initLines( payload ))
   dispatch( initDots( payload ))
 
-  return {
+  dispatch({
     type: DataAction.SELECT_DATASET,
     payload,
-  }
+  })
 }

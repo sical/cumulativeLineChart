@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import './App.css'
-import { initLines } from '../actions/line'
 
 class App extends Component {
   handleChange ( e ) {
@@ -37,7 +36,13 @@ class App extends Component {
           <div id="canvas-header" />
           <div id="chart-header" />
           <div id="chart-footer" />
-          <div id="attribute" />
+          <div id="attribute">
+            {Object.keys( this.props.attrs ).map( key => (
+              <div key={key} className="attribute-label">
+                <span>{key}</span>
+              </div>
+            ))}
+          </div>
           <div id="line-chart">
             <svg>
               <g className="x-axis" />

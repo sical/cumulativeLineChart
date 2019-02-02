@@ -42,8 +42,7 @@ export const fetchData = payload => ( dispatch, getState ) => {
       )
     }),
     mergeMap(([ json, attrs, csv ]) => {
-      attrs.meta = json.meta
-      return of({ key: json.name, data: csv, attrs })
+      return of({ key: json.name, data: csv, attrs, meta: json.meta })
     }),
     toArray()
   )
