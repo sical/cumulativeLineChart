@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import './App.css'
+import { initLines } from '../actions/line'
 
 class App extends Component {
   handleChange ( e ) {
@@ -43,7 +44,11 @@ class App extends Component {
               <g className="y-axis" />
               <g className="x-grid" />
               <g className="y-grid" />
-              <g className="lines" />
+              <g className="lines">
+                {this.props.lines.map( line => (
+                  <path key={line.id} d={line.d} style={line.style} />
+                ))}
+              </g>
               <g className="dots" />
             </svg>
           </div>

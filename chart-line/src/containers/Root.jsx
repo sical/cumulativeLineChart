@@ -25,6 +25,7 @@ class Root extends Component {
           <App
             datasetById={this.props.datasetById}
             datasetIds={this.props.datasetIds}
+            lines={this.props.lines}
             onSelectDataset={this.handleSelectDataset.bind( this )}
           />
         )}
@@ -37,6 +38,7 @@ const mapStateToProps = ( state, _ ) => ({
   isFetching: state.dataset.isFetching,
   datasetById: state.dataset.byId,
   datasetIds: state.dataset.ids,
+  lines: state.line.lines,
 })
 
 export default connect(
