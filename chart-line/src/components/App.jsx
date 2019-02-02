@@ -50,18 +50,27 @@ class App extends Component {
               <g className="x-grid" />
               <g className="y-grid" />
               <g className="lines">
-                {this.props.lines.map( line => (
-                  <path key={line.id} d={line.d} style={line.style} />
-                ))}
+                {this.props.lines.map( line => [
+                  <path
+                    key={line.id + 'ink'}
+                    d={line.d}
+                    style={line.inkStyle}
+                  />,
+                  <path
+                    key={line.id + 'shadow'}
+                    d={line.d}
+                    style={line.shadowStyle}
+                  />,
+                ])}
               </g>
               <g className="dots">
-                {this.props.dots.map( dot =>
-                  dot.children.map(( d, index ) => (
+                {this.props.lines.map( line =>
+                  line.dots.map(( d, index ) => (
                     <circle
-                      key={dot.id + index}
+                      key={line.id + index}
                       cx={d.cx}
                       cy={d.cy}
-                      style={dot.style}
+                      style={line.dotStyle}
                     />
                   ))
                 )}

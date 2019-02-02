@@ -1,5 +1,5 @@
 import { line, curveMonotoneX, scaleLinear, scaleTime } from 'd3'
-import { get, random, each } from 'lodash'
+import { get, random, each, map } from 'lodash'
 export const LineAction = {
   INIT_LINES: 'INIT_LINES',
 }
@@ -12,10 +12,23 @@ export const initLines = payload => {
 
   const data = Array.from({ length: 20 }, ( _, k ) => ({
     id: k,
-    style: {
-      stroke: 'rgb(204, 204, 204)',
+    inkStyle: {
       fill: 'none',
+      stroke: '#ccc',
       strokeWidth: 1,
+      opacity: 0.5,
+      pointerEvents: 'none',
+    },
+    shadowStyle: {
+      fill: 'none',
+      stroke: '#ccc',
+      strokeWidth: 7,
+      opacity: 0,
+    },
+    dotStyle: {
+      stroke: 'none',
+      fill: 'rgb(204, 204, 204)',
+      r: 3,
     },
     values: Array.from({ length: 50 }, ( _, kk ) => ({
       x: kk,
@@ -37,6 +50,10 @@ export const initLines = payload => {
 
   each( data, o => {
     o.d = path( o.values )
+    o.dots = map( o.values, d => ({
+      cx: xScale( get( d, 'x' )),
+      cy: yScale( get( d, 'y' )),
+    }))
   })
 
   return {
