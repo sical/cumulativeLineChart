@@ -3,7 +3,7 @@ import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 
 import './index.css'
-import App from './components/App'
+import Root from './containers/Root'
 import * as serviceWorker from './serviceWorker'
 import configureStore from './configureStore'
 
@@ -12,7 +12,7 @@ const store = configureStore()
 const renderApp = () =>
   render(
     <Provider store={store}>
-      <App />
+      <Root />
     </Provider>,
     document.getElementById( 'root' )
   )

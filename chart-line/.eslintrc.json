@@ -1,8 +1,16 @@
 {
   "extends": "react-app",
   "rules": {
-    "space-in-parens": ["error", "always"],
+    "array-bracket-spacing": ["error", "always"],
+    "object-curly-spacing": ["error", "always"],
     "space-before-function-paren": ["error", "always"],
+    "space-in-parens": [
+      "error",
+      "always",
+      {
+        "exceptions": ["{}", "[]", "()", "empty"]
+      }
+    ],
     "prefer-const": [
       "error",
       {

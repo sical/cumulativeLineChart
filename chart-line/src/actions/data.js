@@ -1,3 +1,12 @@
+import { from, of, forkJoin } from 'rxjs'
+import { tap, mergeMap, toArray } from 'rxjs/operators'
+import { json, dsv } from 'd3'
+import { flow, first, groupBy, mapValues, pickBy } from 'lodash/fp'
+import { each, keys } from 'lodash'
+
+const API_URL =
+  'https://raw.githubusercontent.com/ezzaouia/cumulativeData/master/'
+
 export const DataAction = {
   FETCH_DATA: 'FETCH_DATA',
   REQ_FETCH_DATA: 'REQ_FETCH_DATA',
@@ -5,15 +14,45 @@ export const DataAction = {
   FETCH_DATA_FAILURE: 'FETCH_DATA_FAILURE',
 }
 
-export const fetchData = payload => ( dispatch, getState ) => {
-  dispatch( reqFetchData() )
-
-  console.log( ' load data ', payload )
-
-  setTimeout( () => {
-    dispatch( fetchDataSuccess() )
-  }, 2000 )
+const url = ( name, ext ) => `${API_URL}${name}/${name}-data.${ext}`
+const castAttrs = ( attrs, d ) => {
+  each( keys( attrs ), key => {
+    d[key] = +d[key]
+    d[attrs[key].cumulative] = +d[key]
+  })
+  return d
 }
-export const reqFetchData = _ => ( { type: DataAction.REQ_FETCH_DATA } )
-export const fetchDataSuccess = _ => ( { type: DataAction.FETCH_DATA_SUCCESS } )
-export const fetchDataFailure = _ => ( { type: DataAction.FETCH_DATA_FAILURE } )
+export const fetchData = payload => ( dispatch, getState ) => {
+  dispatch( reqFetchData())
+
+  const datasets = [ 'foot', 'learning' ]
+  const source$ = from( datasets ).pipe(
+    mergeMap( name => forkJoin( of( name ), json( url( name, 'json' )))),
+    mergeMap(([ name, json ]) => {
+      const attrs = flow(
+        groupBy( 'name' ),
+        mapValues( first )
+      )( json.attributes )
+      const quantiAttrs = pickBy( d => d.type === 'quantitative' )( attrs )
+
+      return forkJoin(
+        of( json ),
+        of( attrs ),
+        dsv( json.separator, url( name, 'csv' ), castAttrs.bind( null, quantiAttrs ))
+      )
+    }),
+    mergeMap(([ json, attrs, csv ]) => {
+      attrs.meta = json.meta
+      return of({ [json.name]: { data: csv, attrs } })
+    }),
+    toArray()
+  )
+
+  source$.subscribe( data => dispatch( fetchDataSuccess( data )))
+}
+export const reqFetchData = _ => ({ type: DataAction.REQ_FETCH_DATA })
+export const fetchDataSuccess = payload => ({
+  type: DataAction.FETCH_DATA_SUCCESS,
+  payload,
+})
+export const fetchDataFailure = _ => ({ type: DataAction.FETCH_DATA_FAILURE })
