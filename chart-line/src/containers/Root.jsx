@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { fetchData } from '../actions/data'
+import { fetchData } from '../actions/dataset'
 
 import App from '../components/App'
 
@@ -14,14 +14,23 @@ class Root extends Component {
   render () {
     return (
       <div className="Root">
-        {this.props.isFetching ? <div>Loading...</div> : <App />}
+        {this.props.isFetching ? (
+          <div>Loading...</div>
+        ) : (
+          <App
+            datasetById={this.props.datasetById}
+            datasetIds={this.props.datasetIds}
+          />
+        )}
       </div>
     )
   }
 }
 
 const mapStateToProps = ( state, _ ) => ({
-  isFetching: state.data.isFetching,
+  isFetching: state.dataset.isFetching,
+  datasetById: state.dataset.byId,
+  datasetIds: state.dataset.ids,
 })
 
 const mapDispatchToProps = dispatch => ({

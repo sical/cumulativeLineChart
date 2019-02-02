@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
 
-import data from './data'
+import dataset from './dataset'
 
-export const rootReducer = combineReducers( { data } )
+export const rootReducer = combineReducers({ dataset })

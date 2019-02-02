@@ -1,11 +1,174 @@
 .App {
   text-align: center;
-  background: #282c34;
+  background: #fff;
+  min-width: 100vw;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: #333;
+}
+
+.Toolbar {
+  min-width: 100%;
+  height: 46px;
+  background: #eee;
+}
+
+.Chart {
+  background: #ccc;
+  min-width: 100%;
+  min-height: calc(100vh - 100px);
+  display: grid;
+  grid-gap: 2px;
+  box-sizing: box-border;
+  grid-template-columns: 100px 100px 1fr 100px 100px;
+  grid-template-rows: 12px 100px 1fr 100px 12px;
+  grid-template-areas: 'chart-header chart-header chart-header chart-header chart-header' 'attribute-header corner-top-left margin-top corner-top-right canvas-header' 'attribute margin-left line-chart margin-right canvas' '. corner-bottom-left margin-bottom corner-bottom-right .' 'chart-footer chart-footer chart-footer chart-footer chart-footer';
+}
+
+#line-chart {
+  grid-area: line-chart;
+}
+#margin-top {
+  grid-area: margin-top;
+}
+#margin-right {
+  grid-area: margin-right;
+}
+#corner-top-right {
+  grid-area: corner-top-right;
+}
+#corner-top-left {
+  grid-area: corner-top-left;
+}
+#margin-left {
+  grid-area: margin-left;
+}
+#margin-bottom {
+  grid-area: margin-bottom;
+}
+#corner-bottom-left {
+  grid-area: corner-bottom-left;
+}
+#corner-bottom-right {
+  grid-area: corner-bottom-right;
+}
+#attribute-header {
+  grid-area: attribute-header;
+}
+#canvas {
+  grid-area: canvas;
+}
+#canvas-header {
+  grid-area: canvas-header;
+}
+#chart-header {
+  grid-area: chart-header;
+}
+#chart-footer {
+  grid-area: chart-footer;
+}
+#attribute {
+  grid-area: attribute;
+}
+
+#app-root {
+  font-size: 12px;
+  user-select: none;
+}
+#app-root > div {
+  border: 1px solid #eee;
+}
+#attribute div:hover {
+  background: #256dbd;
+  color: #fff;
+  opacity: 0.9;
+  cursor: grab;
+}
+#canvas {
+  display: flex;
+  overflow: auto;
+}
+.string-attr,
+.histogram-attr,
+.stackedbar-attr {
+  width: 100px;
+}
+.string-attr:hover,
+.histogram-attr:hover,
+.stackedbar-attr:hover {
+  background: #256dbd;
+  color: #fff;
+  opacity: 0.9;
+}
+.string-attr > span {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  display: block;
+  cursor: default;
+}
+#overlay,
+#tooltip {
+  display: none;
+  position: absolute !important;
+}
+.preview {
+  display: initial !important;
+  position: absolute;
+  background: #ccc5;
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+    0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+#margin-bottom {
+  margin-top: 5px;
+  display: flex;
+  flex-direction: column;
+}
+.margin-bottom-partition {
+  height: 25px;
+  background: #eee5;
+  margin-bottom: 5px;
+  display: flex;
+}
+.margin-bottom-partition div {
+  height: 25px;
+  background: #eee;
+  margin-right: 1px;
+}
+.margin-bottom-partition div:hover {
+  background: #256dbd;
+  color: #fff;
+  opacity: 0.9;
+}
+#margin-left {
+  margin-right: 5px;
+  display: flex;
+  flex-direction: row;
+}
+.margin-left-partition {
+  width: 25px;
+  background: #eee5;
+  margin-right: 5px;
+  display: flex;
+  flex-direction: column;
+}
+.margin-left-partition div {
+  width: 25px;
+  background: #eee;
+  margin-bottom: 1px;
+}
+.margin-left-partition div:hover {
+  background: #256dbd;
+  color: #fff;
+  opacity: 0.9;
+}
+#tooltip {
+  top: 25%;
+  left: 40%;
 }
