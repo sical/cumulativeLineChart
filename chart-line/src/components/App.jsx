@@ -61,10 +61,6 @@ class App extends Component {
                     d={line.d}
                     style={line.shadowStyle}
                   />,
-                ])}
-              </g>
-              <g className="dots">
-                {this.props.lines.map( line =>
                   line.dots.map(( d, index ) => (
                     <circle
                       key={line.id + index}
@@ -72,8 +68,8 @@ class App extends Component {
                       cy={d.cy}
                       style={line.dotStyle}
                     />
-                  ))
-                )}
+                  )),
+                ])}
               </g>
             </svg>
           </div>
