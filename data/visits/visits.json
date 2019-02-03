@@ -1,18 +1,22 @@
 {
-	"file": "visits/visits.csv",
-	"name": "Museum and Library visits",
-	"header": 1,
-	"separator": ",",
-	"meta": [
-		{ "date": "date", "id": "institution", "group": "typeOfInstitution"}
-	],
-    "attributes": [
-		{"name":"date",		"type": "date"},
-		{"name":"institution",	"type": "string"},
-		{"name":"typeOfInstitution",	"type": "categorical"},
-		{"name":"entrees", "type": "quantitative", "cumulative": "sumentrees"}
-	],
-    "author": "Aurelien",
-    "description": "Cumulative entries for the month of january 2019",
-    "source": "anon"
+  "file": "visits/visits.csv",
+  "name": "Museum and Library visits",
+  "header": 1,
+  "separator": ",",
+  "meta": {
+    "date": "date",
+    "id": "institution",
+    "group": "typeOfInstitution",
+    "xDefaultKey": "date",
+    "yDefaultKey": "entrees"
+  },
+  "attributes": [
+    { "name": "institution", "type": "string" },
+    { "name": "typeOfInstitution", "type": "categorical" },
+    { "name": "entrees", "type": "quantitative", "cumulative": "sumentrees" },
+    { "name": "date", "type": "date", "pattern": "%d/%m/%Y" }
+  ],
+  "author": "Aurelien",
+  "description": "Cumulative entries for the month of january 2019",
+  "source": "anon"
 }
