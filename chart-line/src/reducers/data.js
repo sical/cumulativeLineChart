@@ -21,6 +21,8 @@ const data = (
       } = datasetById[id]
 
       xDefaultKey = 'date'
+      keyId = 'userId'
+      //DefaultKey = 'time'
       const xAttr = get( attrs, xDefaultKey )
       const yAttr = get( attrs, yDefaultKey )
 

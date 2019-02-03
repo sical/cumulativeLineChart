@@ -1,22 +1,36 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import classNames from 'classnames'
 
 import './App.css'
+import Attribute from './Attribute'
+import DropPlaceholder from './DropPlaceholder'
 
-class App extends Component {
+class App extends PureComponent {
   handleChange ( e ) {
     e.preventDefault()
     e.stopPropagation()
     this.props.onSelectDataset( e.target.value )
   }
 
-  handleMouseEnter ( id, e ) {
+  handleLineMouseEnter ( id, e ) {
     e.preventDefault()
     e.stopPropagation()
     this.props.onLineOver({ id, status: true })
   }
 
-  handleMouseLeave ( id, e ) {
+  handleLineMouseLeave ( id, e ) {
+    e.preventDefault()
+    e.stopPropagation()
+    this.props.onLineOver({ id, status: false })
+  }
+
+  handleEntityMouseEnter ( id, e ) {
+    e.preventDefault()
+    e.stopPropagation()
+    this.props.onLineOver({ id, status: true })
+  }
+
+  handleEntityMouseLeave ( id, e ) {
     e.preventDefault()
     e.stopPropagation()
     this.props.onLineOver({ id, status: false })
@@ -26,6 +40,21 @@ class App extends Component {
     e.preventDefault()
     e.stopPropagation()
     this.props.onLineClick({ id })
+  }
+
+  handleDrop ( parent, attribute ) {
+    console.log( 'handleDrop', parent, attribute )
+    switch ( parent ) {
+      case 'xAxis':
+        break
+      case 'yAxis':
+        break
+      case 'entity':
+        this.props.onAddEntity({ attribute })
+        break
+      default:
+        break
+    }
   }
 
   render () {
@@ -44,26 +73,30 @@ class App extends Component {
           </div>
         </div>
         <div className="Chart">
-          <div id="margin-top" />
-          <div id="margin-right" />
-          <div id="corner-top-right" />
-          <div id="corner-top-left" />
-          <div id="margin-left" />
-          <div id="margin-bottom" />
-          <div id="corner-bottom-left" />
-          <div id="corner-bottom-right" />
-          <div id="attribute-header" />
-          <div id="canvas-header" />
           <div id="chart-header" />
-          <div id="chart-footer" />
+
+          <div id="attribute-header" />
           <div id="attribute">
-            {Object.keys( this.props.attrs ).map( key => (
-              <div key={key} className="attribute-label">
-                <span>{key}</span>
-              </div>
+            {Object.keys( this.props.attrs ).map( name => (
+              <Attribute key={name} name={name} />
             ))}
           </div>
+
+          <div id="corner-top-left" />
+          <div id="corner-top-right" />
+
+          <div id="margin-top" />
+          <div id="margin-left" />
+
           <div id="line-chart">
+            <DropPlaceholder
+              className="y-axis-drop-box"
+              onDrop={this.handleDrop.bind( this, 'xAxis' )}
+            />
+            <DropPlaceholder
+              className="x-axis-drop-box"
+              onDrop={this.handleDrop.bind( this, 'yAxis' )}
+            />
             <svg>
               <g className="x-axis" />
               <g className="y-axis" />
@@ -71,6 +104,18 @@ class App extends Component {
               <g className="y-grid" />
               <g className="lines">
                 {this.props.lineIds.map( key => [
+                  this.props.lineById[key].dots.map(( d, index ) => (
+                    <circle
+                      className={classNames( 'dot-ink', {
+                        'ink-pressed': this.props.lineById[key].isPressed,
+                        'ink-over': this.props.lineById[key].isHovered,
+                      })}
+                      key={this.props.lineById[key].id + index}
+                      cx={d.cx}
+                      cy={d.cy}
+                      style={this.props.lineById[key].dotStyle}
+                    />
+                  )),
                   <path
                     className={classNames( 'line-ink', {
                       'ink-pressed': this.props.lineById[key].isPressed,
@@ -93,27 +138,48 @@ class App extends Component {
                     key={this.props.lineById[key].id + 'shadow'}
                     d={this.props.lineById[key].d}
                     style={this.props.lineById[key].shadowStyle}
-                    onMouseEnter={this.handleMouseEnter.bind( this, key )}
-                    onMouseLeave={this.handleMouseLeave.bind( this, key )}
+                    onMouseEnter={this.handleLineMouseEnter.bind( this, key )}
+                    onMouseLeave={this.handleLineMouseLeave.bind( this, key )}
                     onClick={this.handleClick.bind( this, key )}
                   />,
-                  this.props.lineById[key].dots.map(( d, index ) => (
-                    <circle
-                      className={classNames( 'dot-ink', {
-                        'ink-pressed': this.props.lineById[key].isPressed,
-                        'ink-over': this.props.lineById[key].isHovered,
-                      })}
-                      key={this.props.lineById[key].id + index}
-                      cx={d.cx}
-                      cy={d.cy}
-                      style={this.props.lineById[key].dotStyle}
-                    />
-                  )),
                 ])}
               </g>
             </svg>
           </div>
+
+          <div id="margin-bottom" />
+          <div id="margin-right">
+            <DropPlaceholder
+              className="entity-drop-box"
+              onDrop={this.handleDrop.bind( this, 'entity' )}
+            />
+            {this.props.entityIds.map( entityName => (
+              <div className="entity-wrapper" key={entityName}>
+                {Object.keys( this.props.entityById[entityName]).map( key => (
+                  <div
+                    key={key}
+                    style={this.props.entityById[entityName][key].style}
+                    onMouseEnter={this.handleEntityMouseEnter.bind(
+                      this,
+                      this.props.entityById[entityName][key].id
+                    )}
+                    onMouseLeave={this.handleEntityMouseLeave.bind(
+                      this,
+                      this.props.entityById[entityName][key].id
+                    )}>
+                    {key}
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+
+          <div id="corner-bottom-left" />
+          <div id="corner-bottom-right" />
+
+          <div id="chart-footer" />
           <div id="canvas" />
+          <div id="canvas-header" />
         </div>
         <div id="tooltip" />
       </div>

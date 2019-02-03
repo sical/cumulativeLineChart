@@ -1,13 +1,15 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 
 import { fetchData } from '../actions/dataset'
 import { selectDataset } from '../actions/data'
 import { lineOver, lineClick } from '../actions/line'
+import { addEntity } from '../actions/entity'
+
 import App from '../components/App'
 import './Root.css'
 
-class Root extends Component {
+class Root extends PureComponent {
   componentDidMount () {
     this.props.fetchData()
   }
@@ -24,6 +26,10 @@ class Root extends Component {
     this.props.lineClick({ id, status })
   }
 
+  handleAddEntity ({ attribute }) {
+    this.props.addEntity({ attribute })
+  }
+
   render () {
     return (
       <div className="Root">
@@ -36,9 +42,12 @@ class Root extends Component {
             attrs={this.props.attrs}
             lineById={this.props.lineById}
             lineIds={this.props.lineIds}
+            entityById={this.props.entityById}
+            entityIds={this.props.entityIds}
             onSelectDataset={this.handleSelectDataset.bind( this )}
             onLineOver={this.handleLineOver.bind( this )}
             onLineClick={this.handleLineClick.bind( this )}
+            onAddEntity={this.handleAddEntity.bind( this )}
           />
         )}
       </div>
@@ -53,9 +62,11 @@ const mapStateToProps = ( state, _ ) => ({
   attrs: state.data.attrs,
   lineById: state.line.byId,
   lineIds: state.line.ids,
+  entityById: state.entity.byId,
+  entityIds: state.entity.ids,
 })
 
 export default connect(
   mapStateToProps,
-  { fetchData, selectDataset, lineOver, lineClick }
+  { fetchData, selectDataset, lineOver, lineClick, addEntity }
 )( Root )

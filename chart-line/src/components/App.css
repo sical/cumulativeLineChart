@@ -18,18 +18,21 @@
   align-items: center;
   justify-content: center;
 }
-
+/*
+v1 https://www.layoutit.com/grid/nbYXBXy
+v2 https://www.layoutit.com/grid/VYFf3mN 
+*/
 .Chart {
   font-size: 12px;
   user-select: none;
   min-width: 100%;
   min-height: calc(100vh - 100px);
-  display: grid;
+  height: calc(100vh - 100px);
   grid-gap: 2px;
-  box-sizing: box-border;
-  grid-template-columns: 100px 100px 1fr 100px 100px;
-  grid-template-rows: 12px 100px 1fr 100px 12px;
-  grid-template-areas: 'chart-header chart-header chart-header chart-header chart-header' 'attribute-header corner-top-left margin-top corner-top-right canvas-header' 'attribute margin-left line-chart margin-right canvas' '. corner-bottom-left margin-bottom corner-bottom-right .' 'chart-footer chart-footer chart-footer chart-footer chart-footer';
+  display: grid;
+  grid-template-columns: 100px 1fr 4fr 2fr 100px;
+  grid-template-rows: 46px 1fr 4fr 1fr 46px;
+  grid-template-areas: 'chart-header chart-header chart-header chart-header chart-header' 'attribute-header corner-top-left margin-top corner-top-right canvas-header' 'attribute margin-left line-chart margin-right margin-right' '. corner-bottom-left margin-bottom corner-bottom-right .' 'chart-footer chart-footer chart-footer chart-footer chart-footer';
 }
 
 .Chart > div {
@@ -82,6 +85,57 @@
   display: flex;
   align-items: center;
   text-transform: capitalize;
+}
+
+#line-chart {
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+}
+
+.y-axis-drop-box {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  left: -10px;
+  top: -10px;
+}
+
+.x-axis-drop-box {
+  position: absolute;
+  width: 0;
+  height: 0;
+  right: -10px;
+  bottom: -10px;
+  border-radius: 50%;
+  border-style: solid;
+  border-width: 0 0 30px 30px;
+  border-color: transparent;
+}
+
+#margin-right {
+  position: relative;
+  display: grid;
+  grid-gap: 2px;
+  grid-template-columns: repeat(auto-fit, minmax(0px, 1fr));
+  overflow: auto;
+}
+
+.entity-drop-box {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.entity-wrapper {
+  overflow-y: scroll;
+}
+
+.entity-wrapper > div:hover {
 }
 
 #line-chart > svg {
@@ -180,14 +234,12 @@
 }
 
 #margin-bottom {
-  margin-top: 5px;
   display: flex;
   flex-direction: column;
 }
 .margin-bottom-partition {
   height: 25px;
   background: #eee5;
-  margin-bottom: 5px;
   display: flex;
 }
 .margin-bottom-partition div {
@@ -201,14 +253,12 @@
   opacity: 0.9;
 }
 #margin-left {
-  margin-right: 5px;
   display: flex;
   flex-direction: row;
 }
 .margin-left-partition {
   width: 25px;
   background: #eee5;
-  margin-right: 5px;
   display: flex;
   flex-direction: column;
 }

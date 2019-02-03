@@ -1,5 +1,6 @@
 import { initLines } from './line'
 import { initAxisScale } from './scale'
+import { initEntity } from './entity'
 
 export const DataAction = {
   SELECT_DATASET: 'SELECT_DATASET',
@@ -16,4 +17,5 @@ export const selectDataset = payload => ( dispatch, getState ) => {
   dispatch( initAxisScale())
 
   dispatch( initLines())
+  dispatch( initEntity())
 }
