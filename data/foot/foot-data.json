@@ -1,5 +1,5 @@
 {
-  "file": "foot/foot-data.csv",
+  "file": "foot-data.csv",
   "name": "Foot scorers ",
   "header": 1,
   "separator": ",",
@@ -18,7 +18,7 @@
     { "name": "nko", "type": "quantitative", "cumulative": "sumnko" },
     { "name": "nsession", "type": "quantitative", "cumulative": "sumsession" },
     { "name": "nycard", "type": "quantitative", "cumulative": "sumnycard" },
-    { "name": "userId", "type": "userId" },
+    { "name": "userId", "type": "string" },
     { "name": "team", "type": "categorical" },
     { "name": "playerSurname", "type": "string" },
     { "name": "date", "type": "date", "pattern": "%d/%m/%Y" }
