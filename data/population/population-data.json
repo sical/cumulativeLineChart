@@ -1,0 +1,21 @@
+{
+  "file": "population/population-data.csv",
+  "name": "World Population",
+  "header": 1,
+  "separator": ",",
+  "meta": {
+    "date": "Year",
+    "group": "countryCode",
+    "xDefaultKey": "Year",
+    "yDefaultKey": "populationValue"
+  },
+  "attributes": [
+    { "name": "countryName", "type": "categorical" },
+    { "name": "countryCode", "type": "categorical" },
+    { "name": "birthValue", "type": "quantitative", "cumulative": "populationValue" },
+    { "name": "Year", "type": "date", "pattern": "%Y" }
+  ],
+  "author": "Romain Vuillemot",
+  "description": "World population increase since 1960",
+  "source": "https://github.com/datasets/population"
+}
