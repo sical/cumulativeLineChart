@@ -1,5 +1,5 @@
 {
-  "file": "population-data.csv",
+  "file": "population/population-data.csv",
   "name": "World Population",
   "header": 1,
   "separator": ",",
