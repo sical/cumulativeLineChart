@@ -1,5 +1,5 @@
 {
-  "file": "population/population-data.csv",
+  "file": "population-data.csv",
   "name": "World Population",
   "header": 1,
   "separator": ",",
@@ -12,7 +12,11 @@
   "attributes": [
     { "name": "countryName", "type": "categorical" },
     { "name": "countryCode", "type": "categorical" },
-    { "name": "birthValue", "type": "quantitative", "cumulative": "populationValue" },
+    {
+      "name": "birthValue",
+      "type": "quantitative",
+      "cumulative": "populationValue"
+    },
     { "name": "Year", "type": "date", "pattern": "%Y" }
   ],
   "author": "Romain Vuillemot",
