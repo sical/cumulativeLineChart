@@ -7,7 +7,7 @@
     "date": "Year",
     "group": "countryCode",
     "xDefaultKey": "Year",
-    "yDefaultKey": "populationValue"
+    "yDefaultKey": "birthValue"
   },
   "attributes": [
     { "name": "countryName", "type": "categorical" },
