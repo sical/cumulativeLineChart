@@ -13,7 +13,6 @@ export const addEntity = payload => ( dispatch, getState ) => {
   const { data, attrs, keyId } = getState().data
   const height = 400 // TODO get this from state
 
-  console.log( '======== attrs', attrs, name )
 
   const { type } = attrs[name]
 
