@@ -1,5 +1,5 @@
 {
-  "file": "foot-data.csv",
+  "file": "foot/foot-data.csv",
   "name": "Foot scorers ",
   "header": 1,
   "separator": ",",

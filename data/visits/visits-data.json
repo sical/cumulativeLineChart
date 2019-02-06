@@ -1,5 +1,5 @@
 {
-  "file": "visits.csv",
+  "file": "visits/visits.csv",
   "name": "Museum and Library visits",
   "header": 1,
   "separator": ",",

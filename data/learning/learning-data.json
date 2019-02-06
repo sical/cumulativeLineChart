@@ -1,5 +1,5 @@
 {
-  "file": "learning-data.csv",
+  "file": "learning/learning-data.csv",
   "name": "Learners progression ",
   "header": 1,
   "separator": ",",
