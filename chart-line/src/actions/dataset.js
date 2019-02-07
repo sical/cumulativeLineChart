@@ -5,7 +5,7 @@ import { flow, first, groupBy, mapValues, pickBy } from 'lodash/fp'
 import { each, keys } from 'lodash'
 
 const API_URL =
-  'https://raw.githubusercontent.com/ezzaouia/cumulativeData/master/'
+  'https://raw.githubusercontent.com/sical/cumulativeLineChart/master/data/'
 
 export const DatasetAction = {
   FETCH_DATA: 'FETCH_DATA',
@@ -26,20 +26,24 @@ const castAttrs = ( attrs, d ) => {
 export const fetchData = payload => ( dispatch, getState ) => {
   dispatch( reqFetchData())
 
-  const datasets = [ 'foot', 'learning' ]
-  const source$ = from( datasets ).pipe(
-    mergeMap( name => forkJoin( of( name ), json( url( name, 'json' )))),
-    mergeMap(([ name, json ]) => {
+  const source$ = from( json( `${API_URL}datasets.json` )).pipe(
+    mergeMap( datasetsArray => datasetsArray ),
+    mergeMap( datasetName => json( `${API_URL}${datasetName}` )),
+    mergeMap( datasetSpec => {
+      console.log( 'datasetSpec', datasetSpec )
       const attrs = flow(
         groupBy( 'name' ),
         mapValues( first )
-      )( json.attributes )
+      )( datasetSpec.attributes )
       const quantiAttrs = pickBy( d => d.type === 'quantitative' )( attrs )
 
+      const { separator, file } = datasetSpec
+
+      console.log( 'dksjfdjg', separator, file )
       return forkJoin(
-        of( json ),
+        of( datasetSpec ),
         of( attrs ),
-        dsv( json.separator, url( name, 'csv' ), castAttrs.bind( null, quantiAttrs ))
+        dsv( separator, `${API_URL}${file}`, castAttrs.bind( null, quantiAttrs ))
       )
     }),
     mergeMap(([ json, attrs, csv ]) => {
