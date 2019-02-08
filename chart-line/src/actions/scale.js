@@ -1,11 +1,13 @@
 import { extent, timeParse, scaleLinear, scaleTime } from 'd3'
 import { get, map, uniq } from 'lodash'
+import { LineAction, initLines } from './line'
 
 export const ScaleAction = {
   INIT_AXIS_SCALE: 'INIT_AXIS_SCALE',
+  UPDATE_AXIS_SCALE: 'UPDATE_AXIS_SCALE',
 }
 
-export const initAxisScale = () => ( dispatch, getState ) => {
+export const initAxisScale = payload => ( dispatch, getState ) => {
   const {
     data,
     attrs,
@@ -17,8 +19,10 @@ export const initAxisScale = () => ( dispatch, getState ) => {
     yKey,
   } = getState().data
 
-  const xRange = [ 0, 500 ],
-    yRange = [ 300, 0 ]
+  const { width, height } = payload
+  const margin = { top: 30, right: 30, bottom: 30, left: 30 }
+  const xRange = [ margin.left, width - margin.right ]
+  const yRange = [ height - margin.top, margin.bottom ]
 
   let xScale = null,
     yScale = null
@@ -57,6 +61,15 @@ export const initAxisScale = () => ( dispatch, getState ) => {
 
   dispatch({
     type: ScaleAction.INIT_AXIS_SCALE,
-    payload: { xScale, yScale, xExtent, yExtent, xRange, yRange },
+    payload: { xScale, yScale, xExtent, yExtent, xRange, yRange, margin },
   })
+}
+
+export const updateAxisScale = payload => ( dispatch, getState ) => {
+  dispatch({
+    type: ScaleAction.UPDATE_AXIS_SCALE,
+    payload,
+  })
+
+  dispatch( initLines())
 }

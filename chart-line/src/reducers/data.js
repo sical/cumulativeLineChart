@@ -1,4 +1,3 @@
-import { timeParse } from 'lodash'
 import { get, sortBy } from 'lodash'
 import { DataAction } from '../actions/data'
 
@@ -14,14 +13,12 @@ const data = (
   switch ( action.type ) {
     case DataAction.SELECT_DATASET: {
       const { datasetById, id } = action.payload
-      let {
+      const {
         data,
         attrs,
         meta: { xDefaultKey, yDefaultKey, id: keyId, date },
       } = datasetById[id]
 
-      xDefaultKey = 'date'
-      keyId = 'userId'
       //DefaultKey = 'time'
       const xAttr = get( attrs, xDefaultKey )
       const yAttr = get( attrs, yDefaultKey )

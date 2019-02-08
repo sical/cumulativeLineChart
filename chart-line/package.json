@@ -33,7 +33,6 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "redux-devtools": "^3.5.0",
-    "redux-devtools-extension": "^2.13.7"
+    "redux-devtools": "^3.5.0"
   }
 }

@@ -5,11 +5,36 @@ import './App.css'
 import Attribute from './Attribute'
 import DropPlaceholder from './DropPlaceholder'
 
+import { fromEvent } from 'rxjs'
+import { debounceTime } from 'rxjs/operators'
+
 class App extends PureComponent {
+  constructor ( props ) {
+    super( props )
+    this.el = null
+  }
+
+  componentDidMount () {
+    this.el = document.getElementById( 'line-chart' )
+    this.sub = fromEvent( window, 'resize' )
+      .pipe( debounceTime( 500 ))
+      .subscribe( _ => {
+        const width = this.el.clientWidth
+        const height = this.el.clientHeight
+        this.props.onUpdateAxisScale({ width, height })
+      })
+  }
+
+  componentDidUnMount () {
+    this.sub.unsubscribe()
+  }
+
   handleChange ( e ) {
     e.preventDefault()
     e.stopPropagation()
-    this.props.onSelectDataset( e.target.value )
+    const width = this.el.clientWidth
+    const height = this.el.clientHeight
+    this.props.onSelectDataset( e.target.value, { width, height })
   }
 
   handleLineMouseEnter ( id, e ) {
@@ -56,6 +81,8 @@ class App extends PureComponent {
         break
     }
   }
+
+  svgRef = () => {}
 
   render () {
     return (

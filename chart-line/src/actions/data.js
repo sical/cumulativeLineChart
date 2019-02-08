@@ -14,7 +14,7 @@ export const selectDataset = payload => ( dispatch, getState ) => {
     payload,
   })
 
-  dispatch( initAxisScale())
+  dispatch( initAxisScale( payload.state ))
 
   dispatch( initLines())
   dispatch( initEntity())

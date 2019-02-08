@@ -3,6 +3,7 @@ import { get, map, mapValues, keys } from 'lodash'
 
 export const LineAction = {
   INIT_LINES: 'INIT_LINES',
+  UPDATE_LINE: 'UPDATE_LINE',
   HIGHLIGHT: 'HIGHLIGHT',
   CLICK: 'CLICK',
 }
@@ -74,6 +75,11 @@ export const initLines = () => ( dispatch, getState ) => {
     payload: { byId, ids: keys( byId ) },
   })
 }
+
+export const updateLine = payload => ({
+  type: LineAction.UPDATE_LINE,
+  payload,
+})
 
 export const lineOver = payload => ({
   type: LineAction.HIGHLIGHT,

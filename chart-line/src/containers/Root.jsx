@@ -5,6 +5,7 @@ import { fetchData } from '../actions/dataset'
 import { selectDataset } from '../actions/data'
 import { lineOver, lineClick } from '../actions/line'
 import { addEntity } from '../actions/entity'
+import { updateAxisScale } from '../actions/scale'
 
 import App from '../components/App'
 import './Root.css'
@@ -14,8 +15,8 @@ class Root extends PureComponent {
     this.props.fetchData()
   }
 
-  handleSelectDataset ( id ) {
-    this.props.selectDataset({ id, datasetById: this.props.datasetById })
+  handleSelectDataset ( id, state ) {
+    this.props.selectDataset({ id, datasetById: this.props.datasetById, state })
   }
 
   handleLineOver ({ id, status }) {
@@ -28,6 +29,10 @@ class Root extends PureComponent {
 
   handleAddEntity ({ attribute }) {
     this.props.addEntity({ attribute })
+  }
+
+  handleUpdateAxisScale ( state ) {
+    this.props.updateAxisScale( state )
   }
 
   render () {
@@ -48,6 +53,7 @@ class Root extends PureComponent {
             onLineOver={this.handleLineOver.bind( this )}
             onLineClick={this.handleLineClick.bind( this )}
             onAddEntity={this.handleAddEntity.bind( this )}
+            onUpdateAxisScale={this.handleUpdateAxisScale.bind( this )}
           />
         )}
       </div>
@@ -68,5 +74,5 @@ const mapStateToProps = ( state, _ ) => ({
 
 export default connect(
   mapStateToProps,
-  { fetchData, selectDataset, lineOver, lineClick, addEntity }
+  { fetchData, selectDataset, lineOver, lineClick, addEntity, updateAxisScale }
 )( Root )

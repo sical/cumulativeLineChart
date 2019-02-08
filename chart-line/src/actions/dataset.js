@@ -14,8 +14,6 @@ export const DatasetAction = {
   FETCH_DATA_FAILURE: 'FETCH_DATA_FAILURE',
 }
 
-const url = ( name, ext ) => `${API_URL}${name}/${name}-data.${ext}`
-
 const castAttrs = ( attrs, d ) => {
   each( keys( attrs ), key => {
     d[key] = +d[key]
