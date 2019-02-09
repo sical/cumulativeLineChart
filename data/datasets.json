@@ -2,5 +2,6 @@
   "foot/foot-data.json",
   "learning/learning-data.json",
   "visits/visits-data.json",
-  "population/population-data.json"
+  "population/population-data.json",
+  "random/random-data.json"
 ]

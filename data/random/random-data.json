@@ -1,0 +1,22 @@
+{
+  "file": "learning/random-data.csv",
+  "name": "Random Data",
+  "header": 1,
+  "separator": ",",
+  "meta": {
+    "date": "date",
+    "id": "id",
+    "group": "type",
+    "xDefaultKey": "date",
+    "yDefaultKey": "value"
+  },
+  "attributes": [
+    { "name": "id", "type": "string" },
+    { "name": "type", "type": "categorical" },
+    { "name": "value", "type": "quantitative", "cumulative": "cumul" },
+    { "name": "date", "type": "date", "pattern": "%Y" }
+  ],
+  "author": "Romain",
+  "description": "Random dataset",
+  "source": "Python"
+}
