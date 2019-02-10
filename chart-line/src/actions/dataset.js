@@ -46,6 +46,7 @@ export const fetchData = payload => ( dispatch, getState ) => {
       return forkJoin(
         of( datasetSpec ),
         of( attrs ),
+        of( quantiAttrs ),
         dsv(
           separator,
           `${API_URL}${file}`,
@@ -53,8 +54,14 @@ export const fetchData = payload => ( dispatch, getState ) => {
         )
       )
     }),
-    mergeMap(([ json, attrs, csv ]) => {
-      return of({ key: json.name, data: csv, attrs, meta: json.meta })
+    mergeMap(([ json, attrs, quantiAttrs, csv ]) => {
+      return of({
+        key: json.name,
+        data: csv,
+        attrs,
+        quantiAttrs,
+        meta: json.meta,
+      })
     }),
     toArray()
   )

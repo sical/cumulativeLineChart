@@ -14,26 +14,15 @@ export const tickAddDragToResize = _ => ( dispatch, getStet ) => {
 
   const resize = { clazz: '', start: null, end: null }
   function tstart ( d ) {
-    const el = select( this ),
-      gfather = select( this.parentNode.parentNode )
-
+    const gfather = select( this.parentNode.parentNode )
     resize.clazz = gfather.attr( 'class' )
     resize.start = mouse( svg.node())
-
-    console.log( ' s el', resize )
-
-    // Handler.tmdragStartedHandler( el, gfather, { xScale, yScale, store })
   }
   function tdrag ( d ) {
-    const el = select( this ),
-      gfather = select( this.parentNode.parentNode )
-
-    // console.log( ' drag el', el, gfather )
-    // Handler.tmdragHandler( el, gfather, { xScale, yScale })
+    // const gfather = select( this.parentNode.parentNode )
   }
   function tend ( d ) {
-    const el = select( this ),
-      gfather = select( this.parentNode.parentNode )
+    const gfather = select( this.parentNode.parentNode )
 
     const endClazz = gfather.attr( 'class' )
 
@@ -42,12 +31,7 @@ export const tickAddDragToResize = _ => ( dispatch, getStet ) => {
     }
 
     resize.end = mouse( svg.node())
-
-    console.log( ' e el', resize )
-
     dispatch( resizeAxisScale( resize ))
-
-    // Handler.tmdragEndedHandler( el, gfather, { xScale, yScale, store })
   }
 
   tickdrag

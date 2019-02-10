@@ -21,7 +21,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "npm run build && surge --project ./build --domain linechart.surge.sh"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -33,6 +34,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "git-scripts": "^0.2.1",
     "redux-devtools": "^3.5.0"
   }
 }

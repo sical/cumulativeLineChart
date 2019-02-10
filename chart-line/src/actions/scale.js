@@ -7,6 +7,7 @@ import {
   selectAll,
   axisBottom,
   axisLeft,
+  timeMonth,
 } from 'd3'
 import {
   get,
@@ -104,11 +105,24 @@ export const updateAxisScale = payload => ( dispatch, getState ) => {
 
 export const addAxis = payload => ( dispatch, getState ) => {
   const { xScale, yScale, xRange, yRange } = getState().scale
+
   const xAxisbottom = axisBottom( xScale )
   const yAxisleft = axisLeft( yScale )
 
-  const xDomainVals = xScale.ticks.apply( xScale, [])
-  const yDomainVals = reverse( yScale.ticks.apply( yScale, []))
+  const xTicks = get( payload, 'xTicks', null )
+  const yTicks = get( payload, 'yTicks', null )
+
+  if ( !isNil( xTicks )) {
+    xAxisbottom.ticks( xTicks )
+  }
+  if ( !isNil( yTicks )) {
+    yAxisleft.ticks( yTicks )
+  }
+
+  // var values = tickValues == null ? scale.ticks ? scale.ticks.apply(scale, tickArguments) : scale.domain() : tickValues
+
+  const xDomainVals = xScale.ticks()
+  const yDomainVals = reverse( yScale.ticks())
 
   xAxisbottom.tickSizeOuter( 35 )
   xAxisbottom.tickSizeInner( 25 )
@@ -138,8 +152,6 @@ export const addTickPartition = _ => ( dispatch, getState ) => {
   const { colors, data, xKey, yKey, keyId } = getState().data
 
   const yVlas = [ ...yDomainVals ].reverse()
-
-  console.log( 'yvall', yVlas )
 
   selectAll( '.x-axis,.y-axis' )
     .selectAll( '.tick rect' )

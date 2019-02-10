@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import { fetchData } from '../actions/dataset'
 import { selectDataset } from '../actions/data'
-import { lineOver, lineClick } from '../actions/line'
+import { lineOver, lineClick, smallMultiple } from '../actions/line'
 import { addEntity } from '../actions/entity'
 import { updateAxisScale } from '../actions/scale'
 
@@ -50,6 +50,7 @@ class Root extends PureComponent {
             entityById={this.props.entityById}
             entityIds={this.props.entityIds}
             onSelectDataset={this.handleSelectDataset.bind( this )}
+            onSmallMultiple={this.props.smallMultiple}
             onLineOver={this.handleLineOver.bind( this )}
             onLineClick={this.handleLineClick.bind( this )}
             onAddEntity={this.handleAddEntity.bind( this )}
@@ -76,5 +77,13 @@ const mapStateToProps = ( state, _ ) => ({
 
 export default connect(
   mapStateToProps,
-  { fetchData, selectDataset, lineOver, lineClick, addEntity, updateAxisScale }
+  {
+    fetchData,
+    selectDataset,
+    lineOver,
+    lineClick,
+    addEntity,
+    updateAxisScale,
+    smallMultiple,
+  }
 )( Root )

@@ -16,6 +16,7 @@ const data = (
       const {
         data,
         attrs,
+        quantiAttrs,
         meta: { xDefaultKey, yDefaultKey, id: keyId, date },
       } = datasetById[id]
 
@@ -77,6 +78,7 @@ const data = (
         xKey,
         yKey,
         colors,
+        quantiAttrs,
       }
     }
     default:

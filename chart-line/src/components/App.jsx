@@ -69,7 +69,6 @@ class App extends PureComponent {
   }
 
   handleDrop ( parent, attribute ) {
-    console.log( 'handleDrop', parent, attribute )
     switch ( parent ) {
       case 'xAxis':
         break
@@ -81,6 +80,12 @@ class App extends PureComponent {
       default:
         break
     }
+  }
+
+  handleSmallMultipleClick ( key, e ) {
+    e.preventDefault()
+    e.stopPropagation()
+    this.props.onSmallMultiple( key )
   }
 
   svgRef = () => {}
@@ -99,6 +104,18 @@ class App extends PureComponent {
               ))}
             </select>
           </div>
+          <button onClick={this.handleSmallMultipleClick.bind( this, 'day' )}>
+            Day Small-Multiples
+          </button>
+          <button onClick={this.handleSmallMultipleClick.bind( this, 'week' )}>
+            Week Small-Multiples
+          </button>
+          <button onClick={this.handleSmallMultipleClick.bind( this, 'month' )}>
+            Month Small-Multiples
+          </button>
+          <button onClick={this.handleSmallMultipleClick.bind( this, 'year' )}>
+            Year Small-Multiples
+          </button>
         </div>
         <div className="Chart">
           <div id="chart-header" />
