@@ -5,6 +5,7 @@ import data from './data'
 import line from './line'
 import scale from './scale'
 import entity from './entity'
+import tick from './tick'
 
 export const rootReducer = combineReducers({
   dataset,
@@ -12,4 +13,5 @@ export const rootReducer = combineReducers({
   line,
   scale,
   entity,
+  tick,
 })

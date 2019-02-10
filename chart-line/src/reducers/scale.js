@@ -6,7 +6,7 @@ import {
   timeDay,
   timeFormat,
 } from 'd3'
-import { dropRight, map, reverse } from 'lodash'
+import { dropRight, map, reverse, first, last } from 'lodash'
 import { ScaleAction } from '../actions/scale'
 
 const scale = (
@@ -38,6 +38,49 @@ const scale = (
       yScale.range( yRange )
 
       return { ...state, xRange, yRange, width, height, xScale, yScale }
+    }
+    case ScaleAction.RESIZE_AXIS_SCALE: {
+      const { start, end, clazz } = action.payload
+      const {
+        xScale,
+        yScale,
+        xExtent,
+        yExtent,
+        xRange,
+        yRange,
+        xDomainVals,
+        yDomainVals,
+      } = state
+
+      switch ( clazz ) {
+        case 'x-grid':
+        case 'x-axis': {
+          const [ dx0, dx1 ] = [ first( xDomainVals ), last( xDomainVals ) ],
+            [ rx0, rx1 ] = xRange
+
+          const xTmpDomain = [ dx0, xScale.invert( start[0]), dx1 ]
+          const xTmpRange = [ rx0, xScale( xScale.invert( end[0])), rx1 ]
+          xScale.domain( xTmpDomain ).range( xTmpRange )
+
+          break
+        }
+        case 'y-grid':
+        case 'y-axis': {
+          const [ dy0, dy1 ] = [ last( yDomainVals ), first( yDomainVals ) ],
+            [ ry0, ry1 ] = yRange
+
+          const yTmpDomain = [ dy0, yScale.invert( start[1]), dy1 ]
+          const yTmpRange = [ ry0, yScale( yScale.invert( end[1])), ry1 ]
+          yScale.domain( yTmpDomain ).range( yTmpRange )
+
+          break
+        }
+        default: {
+          break
+        }
+      }
+
+      return { ...state, xScale, yScale }
     }
     case ScaleAction.XTICK_ADD_SELECTION: {
       const { id, s, e } = action.payload

@@ -126,7 +126,7 @@ class App extends PureComponent {
               onDrop={this.handleDrop.bind( this, 'yAxis' )}
             />
 
-            <svg>
+            <svg id="svg">
               <g className="x-axis" />
               <g className="y-axis" />
               <g className="x-grid" />

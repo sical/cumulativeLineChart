@@ -7,15 +7,12 @@ import {
   selectAll,
   axisBottom,
   axisLeft,
-  drag,
-  event,
 } from 'd3'
 import {
   get,
   map,
   uniq,
   reverse,
-  slice,
   isNil,
   sample,
   sortBy,
@@ -24,15 +21,14 @@ import {
   last,
   groupBy,
   keys,
-  nth,
 } from 'lodash'
 import { initLines, lineAddSelectionSignal } from './line'
-import { fromEvent } from 'rxjs'
-import { mergeMap, takeUntil } from 'rxjs/operators'
+import { tickAddDragToResize } from './tick'
 
 export const ScaleAction = {
   INIT_AXIS_SCALE: 'INIT_AXIS_SCALE',
   UPDATE_AXIS_SCALE: 'UPDATE_AXIS_SCALE',
+  RESIZE_AXIS_SCALE: 'RESIZE_AXIS_SCALE',
   ADD_AXIS: 'ADD_AXIS',
   XTICK_ADD_SELECTION: 'XTICK_ADD_SELECTION',
   YTICK_ADD_SELECTION: 'YTICK_ADD_SELECTION',
@@ -134,13 +130,17 @@ export const addAxis = payload => ( dispatch, getState ) => {
   })
 
   dispatch( addTickPartition())
+  dispatch( tickAddDragToResize())
 }
 
-export const addTickPartition = payload => ( dispatch, getState ) => {
+export const addTickPartition = _ => ( dispatch, getState ) => {
   const { xScale, yScale, xDomainVals, yDomainVals } = getState().scale
   const { colors, data, xKey, yKey, keyId } = getState().data
 
   const yVlas = [ ...yDomainVals ].reverse()
+
+  console.log( 'yvall', yVlas )
+
   selectAll( '.x-axis,.y-axis' )
     .selectAll( '.tick rect' )
     .remove()
@@ -191,14 +191,8 @@ export const addTickPartition = payload => ( dispatch, getState ) => {
     .append( 'rect' )
     .classed( 'tick-rect', true )
     .attr( 'x', -20 )
-    .attr(
-      'y',
-      ( d, i ) => -yScale( yDomainVals[i + 1]) + yScale( yDomainVals[i]) + 1
-    )
-    .attr(
-      'height',
-      ( d, i ) => yScale( yDomainVals[i + 1]) - yScale( yDomainVals[i]) - 1
-    )
+    .attr( 'y', ( d, i ) => -yScale( yVlas[i]) + yScale( yVlas[i + 1]) + 1 )
+    .attr( 'height', ( d, i ) => yScale( yVlas[i]) - yScale( yVlas[i + 1]) - 1 )
     .attr( 'width', 20 )
     .on( 'mousedown', function ( d, i ) {
       selection.s = i
@@ -262,3 +256,14 @@ export const xTickRemoveSelection = payload => ({
   type: ScaleAction.XTICK_ADD_SELECTION,
   payload,
 })
+
+export const resizeAxisScale = payload => ( dispatch, getState ) => {
+  dispatch({
+    type: ScaleAction.RESIZE_AXIS_SCALE,
+    payload,
+  })
+
+  dispatch( addAxis())
+  dispatch( addTickPartition())
+  dispatch( initLines())
+}
