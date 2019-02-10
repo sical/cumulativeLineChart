@@ -6,6 +6,8 @@ export const LineAction = {
   UPDATE_LINE: 'UPDATE_LINE',
   HIGHLIGHT: 'HIGHLIGHT',
   CLICK: 'CLICK',
+  ADD_SELECTION_SIGNAL: 'ADD_SELECTION_SIGNAL',
+  REMOVE_SELECTION_SIGNAL: 'REMOVE_SELECTION_SIGNAL',
 }
 
 export const initLines = () => ( dispatch, getState ) => {
@@ -63,6 +65,9 @@ export const initLines = () => ( dispatch, getState ) => {
     id: key,
     isHovered: false,
     isPressed: false,
+    inkStyle: {
+      stroke: '#ccc',
+    },
     d: path( values ),
     dots: map( values, d => ({
       cx: xScale( getX( d )),
@@ -88,5 +93,15 @@ export const lineOver = payload => ({
 
 export const lineClick = payload => ({
   type: LineAction.CLICK,
+  payload,
+})
+
+export const lineAddSelectionSignal = payload => ({
+  type: LineAction.ADD_SELECTION_SIGNAL,
+  payload,
+})
+
+export const lineRemoveSelectionSignal = payload => ({
+  type: LineAction.REMOVE_SELECTION_SIGNAL,
   payload,
 })

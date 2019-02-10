@@ -70,6 +70,8 @@ const mapStateToProps = ( state, _ ) => ({
   lineIds: state.line.ids,
   entityById: state.entity.byId,
   entityIds: state.entity.ids,
+  xticks: state.scale.xticks,
+  yticks: state.scale.yticks,
 })
 
 export default connect(

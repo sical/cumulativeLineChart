@@ -1,0 +1,112 @@
+/* TICK */
+.tick-rect {
+  fill: #ccc5;
+}
+.tick-rect:hover {
+  fill: #7775;
+}
+.tick-rect-drag {
+  fill: #7775;
+}
+/* X Axis 
+#x-axis-title {
+  grid-area: x-axis-title;
+}
+#x-axis-labels {
+  grid-area: x-axis-labels;
+  display: flex;
+}
+#x-axis-ticks {
+  grid-area: x-axis-ticks;
+  display: flex;
+}
+#x-axis-ticks > div {
+  height: 100%;
+  border-top: 1px solid;
+}
+#x-axis-ticks > :first-child {
+  border-left: 1px solid;
+}
+#x-axis-ticks > :last-child {
+  border-right: 1px solid;
+}
+#x-axis-ticks :last-child .x-axis-tick-wrapper {
+  display: none;
+}
+#x-axis-labels > div {
+  display: flex;
+  justify-content: center;
+}
+.x-axis-tick {
+  width: 1px;
+  height: 70%;
+  background: #000;
+  margin-left: auto;
+  border: none;
+}
+.x-axis-tick-wrapper {
+  background: transparent;
+  width: 7px;
+  height: 100%;
+  margin-left: auto;
+  border: none;
+}
+#x-axis-ticks > div:hover {
+  background: #256dbd;
+  cursor: pointer;
+}
+.x-axis-tick-wrapper:hover {
+  background: red;
+  cursor: col-resize;
+}
+
+#y-axis-labels {
+  grid-area: y-axis-labels;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+#y-axis-title {
+  grid-area: y-axis-title;
+}
+#y-axis-ticks {
+  grid-area: y-axis-ticks;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+#y-axis-ticks > div {
+  width: 100%;
+  border-right: 1px solid;
+}
+#y-axis-ticks > :first-child {
+  border-top: 1px solid;
+}
+#y-axis-ticks > :last-child {
+  border-bottom: 1px solid;
+}
+#y-axis-ticks :last-child .y-axis-tick-wrapper {
+  display: none;
+}
+.y-axis-tick-wrapper {
+  background: transparent;
+  width: 100%;
+  height: 7px;
+  margin-left: auto;
+  border: none;
+}
+.y-axis-tick {
+  width: 70%;
+  height: 1px;
+  background: #000;
+  border: none;
+}
+#y-axis-ticks > div:hover {
+  background: #256dbd;
+  cursor: pointer;
+}
+.y-axis-tick-wrapper:hover {
+  background: red;
+  cursor: col-resize;
+}
+*/

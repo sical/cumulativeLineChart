@@ -1,3 +1,12 @@
+import {
+  axisBottom,
+  axisLeft,
+  select,
+  timeMonth,
+  timeDay,
+  timeFormat,
+} from 'd3'
+import { dropRight, map, reverse } from 'lodash'
 import { ScaleAction } from '../actions/scale'
 
 const scale = (
@@ -8,6 +17,8 @@ const scale = (
     yExtent: [],
     xRange: [],
     yRange: [],
+    xTickSelection: {},
+    yTickSelection: {},
   },
   action
 ) => {
@@ -18,7 +29,7 @@ const scale = (
     case ScaleAction.UPDATE_AXIS_SCALE: {
       const { width, height } = action.payload
       const xRange = [ state.margin.left, width - state.margin.right ]
-      const yRange = [ height - state.margin.top, state.margin.bottom ]
+      const yRange = [ height - state.margin.bottom, state.margin.top ]
       // update scale
       const xScale = state.xScale
       const yScale = state.yScale
@@ -28,6 +39,32 @@ const scale = (
 
       return { ...state, xRange, yRange, width, height, xScale, yScale }
     }
+    case ScaleAction.XTICK_ADD_SELECTION: {
+      const { id, s, e } = action.payload
+
+      return {
+        ...state,
+        xTickSelection: {
+          ...state.xTickSelection,
+          [[ s, e ]]: { s, e, id },
+        },
+      }
+    }
+    case ScaleAction.YTICK_ADD_SELECTION: {
+      const { id, s, e } = action.payload
+
+      return {
+        ...state,
+        yTickSelection: {
+          ...state.yTickSelection,
+          [[ s, e ]]: { s, e, id },
+        },
+      }
+    }
+    case ScaleAction.ADD_AXIS: {
+      return { ...state, ...action.payload }
+    }
+
     default:
       return state
   }

@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import classNames from 'classnames'
 
+import '../styles/Axis.css'
 import './App.css'
 import Attribute from './Attribute'
 import DropPlaceholder from './DropPlaceholder'
@@ -124,6 +125,7 @@ class App extends PureComponent {
               className="x-axis-drop-box"
               onDrop={this.handleDrop.bind( this, 'yAxis' )}
             />
+
             <svg>
               <g className="x-axis" />
               <g className="y-axis" />

@@ -32,15 +32,87 @@ export const line = ( state = { byId: {}, ids: [] }, action ) => {
     }
     case LineAction.CLICK: {
       const { id } = action.payload
-      let line = state.byId[id]
-      line = {
-        ...line,
-        isPressed: !line.isPressed,
+
+      let ids = id
+      const lines = {}
+      if ( !isArray( id )) {
+        ids = [ id ]
       }
+
+      each( ids, id => {
+        lines[id] = {
+          ...state.byId[id],
+          isPressed: !state.byId[id].isPressed,
+          inkStyle: {
+            stroke: ids.color || 'red',
+          },
+          dotStyle: {
+            fill: ids.color || 'red',
+          },
+        }
+      })
 
       return {
         ...state,
-        byId: { ...state.byId, [id]: line, isPressed: !line.isPressed },
+        byId: { ...state.byId, ...lines, isPressed: !line.isPressed },
+      }
+    }
+    case LineAction.ADD_SELECTION_SIGNAL: {
+      const { id } = action.payload
+
+      let ids = id
+      const lines = {}
+      if ( !isArray( id )) {
+        ids = [ id ]
+      }
+
+      each( ids, id => {
+        lines[id] = {
+          ...state.byId[id],
+          isPressed: true,
+          inkStyle: {
+            stroke: ids.color || 'red',
+            opacity: 0.5,
+          },
+          dotStyle: {
+            fill: ids.color || 'red',
+            opacity: 0.5,
+          },
+        }
+      })
+
+      return {
+        ...state,
+        byId: { ...state.byId, ...lines, isPressed: true },
+      }
+    }
+    case LineAction.REMOVE_SELECTION_SIGNAL: {
+      const { id } = action.payload
+
+      let ids = id
+      const lines = {}
+      if ( !isArray( id )) {
+        ids = [ id ]
+      }
+
+      each( ids, id => {
+        lines[id] = {
+          ...state.byId[id],
+          isPressed: false,
+          inkStyle: {
+            stroke: '#ccc',
+            opacity: 0.5,
+          },
+          dotStyle: {
+            fill: '#ccc',
+            opacity: 0.5,
+          },
+        }
+      })
+
+      return {
+        ...state,
+        byId: { ...state.byId, ...lines, isPressed: false },
       }
     }
     default:
