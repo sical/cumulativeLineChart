@@ -8,15 +8,19 @@
 .tick-rect-drag {
   fill: #7775;
 }
+.x-axis,
+.y-axis .tick line {
+  stroke-width: 2;
+}
 .x-axis .tick line:hover {
-  cursor: col-resize;
   stroke: red;
-  stroke-width: 5;
+  stroke-width: 7;
+  cursor: col-resize;
 }
 .y-axis .tick line:hover {
-  cursor: row-resize;
   stroke: red;
-  stroke-width: 5;
+  stroke-width: 7;
+  cursor: row-resize;
 }
 /* X Axis 
 #x-axis-title {
