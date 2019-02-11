@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import { fetchData } from '../actions/dataset'
 import { selectDataset } from '../actions/data'
-import { lineOver, lineClick, smallMultiple } from '../actions/line'
+import { lineOver, lineClick, smallMultiple, progLine } from '../actions/line'
 import { addEntity } from '../actions/entity'
 import { updateAxisScale } from '../actions/scale'
 
@@ -51,6 +51,7 @@ class Root extends PureComponent {
             entityIds={this.props.entityIds}
             onSelectDataset={this.handleSelectDataset.bind( this )}
             onSmallMultiple={this.props.smallMultiple}
+            onProgLine={this.props.progLine}
             onLineOver={this.handleLineOver.bind( this )}
             onLineClick={this.handleLineClick.bind( this )}
             onAddEntity={this.handleAddEntity.bind( this )}
@@ -85,5 +86,6 @@ export default connect(
     addEntity,
     updateAxisScale,
     smallMultiple,
+    progLine,
   }
 )( Root )

@@ -44,10 +44,10 @@ export const line = ( state = { byId: {}, ids: [] }, action ) => {
           ...state.byId[id],
           isPressed: !state.byId[id].isPressed,
           inkStyle: {
-            stroke: ids.color || 'red',
+            stroke: ids.color,
           },
           dotStyle: {
-            fill: ids.color || 'red',
+            fill: ids.color,
           },
         }
       })

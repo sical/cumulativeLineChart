@@ -88,6 +88,12 @@ class App extends PureComponent {
     this.props.onSmallMultiple( key )
   }
 
+  handleProgLine ( level, e ) {
+    e.preventDefault()
+    e.stopPropagation()
+    this.props.onProgLine({ level })
+  }
+
   svgRef = () => {}
 
   render () {
@@ -96,7 +102,7 @@ class App extends PureComponent {
         <div className="Toolbar">
           <div className="dataset-select">
             <select name="dataset" onChange={this.handleChange.bind( this )}>
-              <option value={null}>---</option>
+              <option value={'null'}>---</option>
               {( this.props.datasetIds || []).map( key => (
                 <option key={key} value={key}>
                   {key}
@@ -104,6 +110,18 @@ class App extends PureComponent {
               ))}
             </select>
           </div>
+          <button onClick={this.handleProgLine.bind( this, 'Prog' )}>
+            Plateaux
+          </button>
+          <button onClick={this.handleProgLine.bind( this, 'Prog+' )}>
+            Pentes
+          </button>
+          <button onClick={this.handleProgLine.bind( this, 'Prog++' )}>
+            Pentes+
+          </button>
+          <button onClick={this.handleSmallMultipleClick.bind( this, 'reset' )}>
+            Reset
+          </button>
           <button onClick={this.handleSmallMultipleClick.bind( this, 'day' )}>
             Day Small-Multiples
           </button>

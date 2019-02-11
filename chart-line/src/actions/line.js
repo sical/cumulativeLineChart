@@ -7,7 +7,19 @@ import {
   timeMonth,
   timeYear,
 } from 'd3'
-import { get, map, mapValues, keys, each, join, values, flatten } from 'lodash'
+import {
+  get,
+  map,
+  mapValues,
+  keys,
+  each,
+  join,
+  values,
+  flatten,
+  filter,
+  size,
+} from 'lodash'
+import * as moment from 'moment'
 
 import { addAxis } from './scale'
 
@@ -116,6 +128,8 @@ export const smallMultiple = payload => ( dispatch, getState ) => {
     pattern = '%d/%m/%Y'
   } else if ( payload === 'week' ) {
     pattern = '%V/%m/%Y'
+  } else {
+    dispatch( initLines())
   }
 
   let byId = nest()
@@ -166,12 +180,102 @@ export const smallMultiple = payload => ( dispatch, getState ) => {
     })),
   }))
 
-  dispatch( addAxis({ xTicks: timeMonth.every( 1 ) }))
+  dispatch( addAxis())
 
   dispatch({
     type: LineAction.INIT_LINES,
     payload: { byId, ids: keys( byId ) },
   })
+}
+
+export const progLine = payload => ( dispatch, getState ) => {
+  const {
+    data,
+    attrs,
+    keyId,
+    xKey,
+    yKey,
+    xType,
+    yType,
+    xDefaultKey,
+    yDefaultKey,
+    quantiAttrs,
+  } = getState().data
+
+  const { level } = payload
+
+  const threshold = {
+    'Prog++': {
+      sumscore: { days: 10, delta0: 50 },
+    },
+    'Prog+': {
+      sumscore: { days: 20, delta0: 20, delta1: 50 },
+    },
+    Prog: {
+      sumscore: { days: 30, delta0: 20 },
+    },
+  }
+
+  const grouped = nest()
+    .key( d => d[keyId])
+    .entries( data )
+
+  const filtered = filter( grouped, userData => {
+    const s = userData.values
+    const attr = 'sumscore'
+    let isHappy = false,
+      diffDays
+
+    if ( userData.key === '2660090' ) {
+      console.log( '"2660090"', userData )
+    }
+    for ( let i = 0; i <= size( s ); i++ ) {
+      for ( let j = i + 1; j <= size( s ) - 1; j++ ) {
+        // if out of time window
+        diffDays = moment( s[j].dateObj ).diff( moment( s[i].dateObj ), 'days' )
+
+        if (
+          level === 'Prog' &&
+          diffDays >= threshold[level][attr].days &&
+          s[j][attr] - s[i][attr] <= threshold[level][attr].delta0
+        ) {
+          isHappy = true
+          break
+        }
+
+        if (
+          level === 'Prog+' &&
+          diffDays >= threshold[level][attr].days &&
+          s[j][attr] - s[i][attr] > threshold[level][attr].delta0 &&
+          s[j][attr] - s[i][attr] < threshold[level][attr].delta1
+        ) {
+          isHappy = true
+          break
+        }
+
+        if (
+          level === 'Prog++' &&
+          s[j][attr] - s[i][attr] >= threshold[level][attr].delta0
+        ) {
+          isHappy = true
+          break
+        }
+        // if ( diffDays > threshold[attr].days ) {
+        //   break
+        // }
+      }
+
+      if ( isHappy ) {
+        break
+      }
+    }
+
+    return isHappy
+  })
+
+  console.log( 'filtered', filtered )
+
+  dispatch( lineClick({ id: map( filtered, 'key' ) }))
 }
 
 export const updateLine = payload => ({
