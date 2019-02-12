@@ -25,13 +25,14 @@ const castAttrs = ( quatattrs, attrs, meta, d ) => {
 export const fetchData = payload => ( dispatch, getState ) => {
   dispatch( reqFetchData())
 
-  // const datasets = [
-  //   'foot/foot-data.json',
-  //   'learning/learning-data.json',
-  //   'visits/visits-data.json',
-  //   'population/population-data.json',
-  // ]
-  const source$ = from( json( `${API_URL}datasets.json` )).pipe(
+  const datasets = [
+    'foot/foot-data.json',
+    'learning/learning-data.json',
+    'visits/visits-data.json',
+    'population/population-data.json',
+    'random/random-data.json',
+  ]
+  const source$ = from( datasets /*json( `${API_URL}datasets.json` )*/ ).pipe(
     // mergeMap( datasetsArray => datasetsArray ),
     mergeMap( datasetName => json( `${API_URL}${datasetName}` )),
     mergeMap( datasetSpec => {
